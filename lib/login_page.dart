@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winwin/home.dart';
 import 'auth.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:regexed_validator/regexed_validator.dart';
+  import 'package:regexed_validator/regexed_validator.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.auth});
@@ -160,7 +160,8 @@ void moveToPhone() {
               child: Text("Don’t have an account?",
                   style: TextStyle(color: Colors.black87))),
           Expanded(child: Divider(color: Colors.green[800])),
-        ])),   
+        ])),  
+
         new RaisedButton(
           textColor: Colors.white,
           color: Colors.orange,
@@ -168,6 +169,54 @@ void moveToPhone() {
               style: new TextStyle(fontSize: 25.0)),
           onPressed: moveToRegister,
          ),
+         
+           Container(     
+        child: Row(children: <Widget>[
+          Expanded(child: Divider(color: Colors.green[800])),
+          Padding(
+              padding: EdgeInsets.all(6),
+              child: Text("or",
+                  style: TextStyle(color: Colors.black87))),
+          Expanded(child: Divider(color: Colors.green[800])),
+        ])), 
+
+            new RaisedButton(
+          textColor: Colors.white,
+          color: Colors.red,
+          child: new Text('Guest',
+              style: new TextStyle(fontSize: 25.0)),
+          onPressed: moveToGuest,
+        ),
+      
+      new RaisedButton(
+          textColor: Colors.white,
+          color: Colors.green,
+          child: new Text('Phone',
+              style: new TextStyle(fontSize: 25.0)),
+          onPressed: moveToGuest,
+        ),
+
+      new RaisedButton(
+          textColor: Colors.white,
+          color: Colors.blue,
+          child: new Text('Facebook',
+              style: new TextStyle(fontSize: 25.0)),
+          onPressed: moveToGuest,
+        ),
+        
+      Container(    
+        margin: EdgeInsets.only(top: 45), 
+        child: Row(children: <Widget>[
+          Expanded(child: Divider(color: Colors.green[800])),
+          Padding(
+              padding: EdgeInsets.all(6),
+              child: Text("POWER BY WINWIN",
+                  style: TextStyle(fontSize: 17,color: Colors.black87))),
+          Expanded(child: Divider(color: Colors.green[800])),
+        ])), 
+
+
+
       ];
     } else {
       return [
@@ -210,12 +259,38 @@ void moveToPhone() {
 
       new RaisedButton(
           textColor: Colors.white,
-          color: Colors.orange,
+          color: Colors.red,
           child: new Text('Guest',
               style: new TextStyle(fontSize: 25.0)),
           onPressed: moveToGuest,
         ),
+      
+      new RaisedButton(
+          textColor: Colors.white,
+          color: Colors.green,
+          child: new Text('Phone',
+              style: new TextStyle(fontSize: 25.0)),
+          onPressed: moveToGuest,
+        ),
 
+      new RaisedButton(
+          textColor: Colors.white,
+          color: Colors.blue,
+          child: new Text('Facebook',
+              style: new TextStyle(fontSize: 25.0)),
+          onPressed: moveToGuest,
+        ),
+        
+      Container(    
+        margin: EdgeInsets.only(top: 45), 
+        child: Row(children: <Widget>[
+          Expanded(child: Divider(color: Colors.green[800])),
+          Padding(
+              padding: EdgeInsets.all(6),
+              child: Text("POWER BY WINWIN",
+                  style: TextStyle(fontSize: 17,color: Colors.black87))),
+          Expanded(child: Divider(color: Colors.green[800])),
+        ])), 
 
 
 
