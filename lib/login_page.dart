@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winwin/home.dart';
 import 'auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:regexed_validator/regexed_validator.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({this.auth});
@@ -13,22 +14,7 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() => new _LoginPageState();
 }
 
- bool validatePassword(String value){
-        String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-        RegExp regpassword = new RegExp(pattern);
-        return regpassword.hasMatch(value);
-  }
-
-bool validateEmail(String value) {
-  Pattern pattern =
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-  RegExp regemail = new RegExp(pattern);
-  return (!regemail.hasMatch(value)) ? false : true;
-}
-
-
-
-enum FormType { login, register }
+enum FormType { login, register, guest, facebook, phone}
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
@@ -57,7 +43,21 @@ class _LoginPageState extends State<LoginPage> {
           user.sendEmailVerification();
           print('Signed in: ${user.uid}');
           Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-        } else {
+        } 
+        else if (_formType == FormType.guest) {
+          UserCredential result = await FirebaseAuth.instance
+              .signInAnonymously();         
+          User user = result.user;
+          print('Signed in: ${user.uid}');
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+        } 
+        else if (_formType == FormType.phone) {
+            
+        }
+        else if (_formType == FormType.facebook) {
+            
+        }
+        else {
           UserCredential result = await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
                   email: _email, password: _password);
@@ -82,6 +82,25 @@ class _LoginPageState extends State<LoginPage> {
       _formType = FormType.login;
     });
   }
+
+  void moveToGuest() {
+    setState(() {
+      _formType = FormType.guest;
+    });
+  }
+
+  void moveToFacebook() {
+    setState(() {
+      _formType = FormType.facebook;
+    });
+  }
+
+void moveToPhone() {
+    setState(() {
+      _formType = FormType.phone;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,14 +128,15 @@ class _LoginPageState extends State<LoginPage> {
         style: TextStyle(color: Colors.white,fontSize: 25.0,),
         decoration: new InputDecoration(labelText: 'Email',hintText: "Enter your email",labelStyle: new TextStyle(color: Colors.white),hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey[200])),
         validator: (value) => 
-        !EmailValidator.validate(value, true) ? 'Please provide a valid Email' : null, 
+        !validator.email(value) ? 'Please provide a valid Email' : null, 
+       // !EmailValidator.validate(value, true)
         onSaved: (value) => _email = value,
       ),
       new TextFormField(
         style: TextStyle(color: Colors.white,fontSize: 25.0),
         decoration: new InputDecoration(labelText: 'Password',hintText: "Enter your password",labelStyle: new TextStyle(color: Colors.white),hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey[200])),
         obscureText: true,
-        validator: (value) => value.isEmpty ? 'Password can\'t be empty' : null, 
+        validator: (value) => value.length < 8  ? 'Use 8 characters or more' : null, 
         onSaved: (value) => _password = value,
       ),
     ];
@@ -158,6 +178,7 @@ class _LoginPageState extends State<LoginPage> {
               style: new TextStyle(fontSize: 25.0)),
           onPressed: validateAndSubmit,
         ),
+
         Container(     
         child: Row(children: <Widget>[
           Expanded(child: Divider(color: Colors.green[800])),
@@ -167,18 +188,40 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(color: Colors.black87))),
           Expanded(child: Divider(color: Colors.green[800])),
         ])),   
+
         new RaisedButton(
           textColor: Colors.white,
           color: Colors.orange,
           child: new Text('Sign in',
               style: new TextStyle(fontSize: 25.0)),
           onPressed: moveToLogin,
-
-
-
-
-  
         ),
+
+      Container(     
+        child: Row(children: <Widget>[
+          Expanded(child: Divider(color: Colors.green[800])),
+          Padding(
+              padding: EdgeInsets.all(6),
+              child: Text("or",
+                  style: TextStyle(color: Colors.black87))),
+          Expanded(child: Divider(color: Colors.green[800])),
+        ])), 
+
+
+      new RaisedButton(
+          textColor: Colors.white,
+          color: Colors.orange,
+          child: new Text('Guest',
+              style: new TextStyle(fontSize: 25.0)),
+          onPressed: moveToGuest,
+        ),
+
+
+
+
+
+
+        
       ];
     }
   }

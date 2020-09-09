@@ -14,6 +14,11 @@ class Home extends StatefulWidget {
       appBar: AppBar(
         title: Text('Home'),
       ),
+      body: new Container(
+        child:  new Center(
+          child: new Text('welcome',style: new TextStyle() ,),
+        ),
+      ),
     );
   }
  }
