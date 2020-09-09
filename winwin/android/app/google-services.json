@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1078045277125",
+    "firebase_url": "https://winwin-a98ba.firebaseio.com",
+    "project_id": "winwin-a98ba",
+    "storage_bucket": "winwin-a98ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078045277125:android:dd3e9c07051f2a5354e9ac",
+        "android_client_info": {
+          "package_name": "com.project.winwin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078045277125-a9cca39bttb9dobr7u60q67dc7mt2df0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdP8zpPjFQvrtpnWXOY_nkQr13Bg3ws88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078045277125-a9cca39bttb9dobr7u60q67dc7mt2df0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
