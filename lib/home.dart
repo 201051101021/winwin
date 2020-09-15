@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
+import 'auth.dart';
 
+class Home extends StatelessWidget {
+  Home({this.auth, this.onSignedOut});
+  final BaseAuth auth;
+  final VoidCallback onSignedOut;
 
-class Home extends StatefulWidget {
- 
+  void _signedOut() async {
+    try {
+      await auth.signOut();
+      onSignedOut();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
- _HomeState createState() => _HomeState();
-}
- class _HomeState extends State<Home>{
-   @override 
-
-  Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('eeeee'),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text('log out',style: TextStyle(fontSize: 17,color: Colors.white)),
+            onPressed: _signedOut
+            )
+        ],
       ),
       body: new Container(
-        child:  new Center(
-          child: new Text('welcome',style: new TextStyle() ,),
+        child: new Center(
+          child:  new Text('wel',style: TextStyle(fontSize: 32)),
         ),
       ),
     );
   }
- }
-
-
- 
+}

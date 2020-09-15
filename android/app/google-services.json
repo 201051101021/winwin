@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1078045277125-umimbi33gk8hn0rnsnknckj7pvqooiog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.winwin",
+            "certificate_hash": "31f8cdc6d0da2bea8e6a745e3fbca630bf0ae49e"
+          }
+        },
+        {
           "client_id": "1078045277125-a9cca39bttb9dobr7u60q67dc7mt2df0.apps.googleusercontent.com",
           "client_type": 3
         }

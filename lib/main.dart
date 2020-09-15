@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winwin/auth.dart';
-import 'package:winwin/login_page.dart';
+import 'package:winwin/page/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
