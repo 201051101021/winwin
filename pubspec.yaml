@@ -35,7 +35,10 @@ dependencies:
   email_validator: 1.0.5
   regexed_validator: 1.0.4
   pin_code_fields: 5.0.1
-  
+  flare_flutter: 2.0.6
+  provider: 4.3.2+2
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -5,33 +5,36 @@ abstract class BaseAuth {
   Future<String> signInWithEmailAndPassword(String email, String password);
   Future<String> createUserWithEmailAndPassword(String email, String password);
   Future<void> signOut();
-  /*Future<String> currentUser(User user);*/
 }
 
 class Auth implements BaseAuth {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Future<String> signInWithEmailAndPassword(
       String email, String password) async {
-    UserCredential result = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+    UserCredential result = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
     User user = result.user;
     return user.uid;
   }
 
   Future<String> createUserWithEmailAndPassword(
       String email, String password) async {
-    UserCredential result = await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
+    UserCredential result = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
     User user = result.user;
     return user.uid;
   }
 
- /*Future<String> currentUser(User user) async {
-    FirebaseAuth.instance.authStateChanges().listen((User user) {});
-    return user.uid;
-  }*/
+  Future signAnon() async {
+    UserCredential result = await _auth.signInAnonymously();
+    User user = result.user;
+    return user;
+  }
+
 
   Future<void> signOut() async {
-    return FirebaseAuth.instance.signOut();
+    return _auth.signOut();
   }
 
   /*Future<User> signInWithGoogle() async {

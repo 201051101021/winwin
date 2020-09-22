@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Login_btn extends StatelessWidget {
-  Login_btn({@required this.onPressed}); 
+  Login_btn({@required this.onPressed});
   final GestureTapCallback onPressed;
- 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -21,7 +21,7 @@ class Login_btn extends StatelessWidget {
             ),*/
             Text(
               "Login",
-              style: TextStyle(color: Colors.white,fontSize: 20.0),
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
         ),
@@ -35,11 +35,10 @@ class Login_btn extends StatelessWidget {
 class Createacc_btn extends StatelessWidget {
   Createacc_btn({@required this.onPressed});
   final GestureTapCallback onPressed;
- 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      
       child: Padding(
         padding: EdgeInsets.all(5.0),
         child: Row(
@@ -51,7 +50,7 @@ class Createacc_btn extends StatelessWidget {
             ),*/
             Text(
               "Create an account",
-              style: TextStyle(color: Colors.white,fontSize: 20.0),
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
         ),
@@ -61,14 +60,11 @@ class Createacc_btn extends StatelessWidget {
     );
   }
 }
- 
-
-
 
 class Phone_btn extends StatelessWidget {
   Phone_btn({@required this.onPressed});
   final GestureTapCallback onPressed;
- 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -84,8 +80,8 @@ class Phone_btn extends StatelessWidget {
               color: Colors.amber,
             ),*/
             Text(
-              "Phone",
-              style: TextStyle(color: Colors.white,fontSize: 20.0),
+              "Login with phone number",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
         ),
@@ -96,12 +92,10 @@ class Phone_btn extends StatelessWidget {
   }
 }
 
-
-
 class Facebook_btn extends StatelessWidget {
   Facebook_btn({@required this.onPressed});
   final GestureTapCallback onPressed;
- 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -117,8 +111,8 @@ class Facebook_btn extends StatelessWidget {
               color: Colors.amber,
             ),*/
             Text(
-              "Facebook",
-              style: TextStyle(color: Colors.white,fontSize: 20.0),
+              "Login with Facebook",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
         ),
@@ -132,7 +126,7 @@ class Facebook_btn extends StatelessWidget {
 class Google_btn extends StatelessWidget {
   Google_btn({@required this.onPressed});
   final GestureTapCallback onPressed;
- 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -148,8 +142,8 @@ class Google_btn extends StatelessWidget {
               color: Colors.amber,
             ),*/
             Text(
-              "Google",
-              style: TextStyle(color: Colors.white,fontSize: 20.0),
+              "Login with Google",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
         ),
@@ -163,7 +157,7 @@ class Google_btn extends StatelessWidget {
 class Guest_btn extends StatelessWidget {
   Guest_btn({@required this.onPressed});
   final GestureTapCallback onPressed;
- 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -179,8 +173,8 @@ class Guest_btn extends StatelessWidget {
               color: Colors.amber,
             ),*/
             Text(
-              "Guest",
-              style: TextStyle(color: Colors.white,fontSize: 20.0),
+              "Login with Guest",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
         ),
@@ -191,13 +185,10 @@ class Guest_btn extends StatelessWidget {
   }
 }
 
-
-
-
 class Register_btn extends StatelessWidget {
   Register_btn({@required this.onPressed});
   final GestureTapCallback onPressed;
- 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
@@ -214,7 +205,7 @@ class Register_btn extends StatelessWidget {
             ),*/
             Text(
               "Create",
-              style: TextStyle(color: Colors.white,fontSize: 20.0),
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
         ),
@@ -224,8 +215,3 @@ class Register_btn extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

@@ -1,13 +1,10 @@
-
 import 'package:flutter/material.dart';
 
-
 class Credit_txt extends StatelessWidget {
-
-   @override
+  @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top:25 ),
+        padding: EdgeInsets.only(top: 25),
 
         //margin: EdgeInsets.only(top:25),
         child: Row(children: <Widget>[

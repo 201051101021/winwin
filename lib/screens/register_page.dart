@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:winwin/page/login_page.dart';
+import 'package:winwin/screens/login_page.dart';
 import 'package:winwin/widget_txt/credit_txt.dart';
 import 'package:winwin/auth.dart';
 
@@ -9,9 +9,9 @@ import 'package:regexed_validator/regexed_validator.dart';
 import 'package:winwin/widget_btn/custom_btn.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({this.auth, this.onSignedIn});
+  RegisterPage({this.auth});
   final BaseAuth auth;
-  final VoidCallback onSignedIn;
+
 
   @override
   State<StatefulWidget> createState() => new _RegisterPageState();
@@ -62,7 +62,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return MaterialApp( 
+    theme: ThemeData(
+          primarySwatch: Colors.orange,
+          primaryTextTheme: TextTheme(
+            headline6: TextStyle(color: Colors.white)
+          ),
+        ),
+        home: Scaffold(
         resizeToAvoidBottomPadding: false,
         backgroundColor: Colors.orange[300],
         appBar: new AppBar(
@@ -77,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
               children: buildInputs() + buildSubmitButtons(),
             ),
           ),
-        ));
+        )));
   }
 
   List<Widget> buildInputs() {

@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winwin/home.dart';
-import 'package:winwin/page/register_page.dart';
+import 'package:winwin/screens/register_page.dart';
 import '../auth.dart';
-
 import 'package:regexed_validator/regexed_validator.dart';
 import 'package:winwin/widget_btn/custom_btn.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({this.auth, this.onSignedIn});
+  LoginPage({this.auth});
   final BaseAuth auth;
-  final VoidCallback onSignedIn;
 
   @override
   State<StatefulWidget> createState() => new _LoginPageState();
@@ -25,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   String _email;
   String _password;
   FormType _formType = FormType.guest;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -39,18 +38,18 @@ class _LoginPageState extends State<LoginPage> {
   void emailLogin() async {
     setState(() {
       _formType = FormType.login;
-       });
+    });
     if (validateAndSave()) {
       try {
         if (_formType == FormType.login) {
+          signOut();
           UserCredential result = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: _email, password: _password);
           User user = result.user;
           print('Signed in: ${user.uid}');
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => Home()));
-        } 
-        widget.onSignedIn();
+        }
       } catch (e) {
         print('Error $e');
       }
@@ -58,42 +57,51 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void guestLogin() async {
-      setState(() {
+    setState(() {
       _formType = FormType.guest;
     });
-      try {
-         if (_formType == FormType.guest) {
-          UserCredential result =
-              await FirebaseAuth.instance.signInAnonymously();
-          User user = result.user;
-          print('Signed in: ${user.uid}');
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Home()));            
-        } 
-      } catch (e) {
-        print('Error $e');
+    try {
+      if (_formType == FormType.guest) {
+        signOut();
+        UserCredential result = await FirebaseAuth.instance.signInAnonymously();
+        User user = result.user;
+        print('Signed in: ${user.uid}');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home()));
       }
+    } catch (e) {
+      print('Error $e');
+    }
   }
 
+  void signOut() async {
+    return _auth.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.orange[300],
-        appBar: new AppBar(
-          title: new Text('WINWIN APP'),
+    return MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.orange,
+          primaryTextTheme:
+              TextTheme(headline6: TextStyle(color: Colors.white)),
         ),
-        body: new Container(
-          padding: EdgeInsets.all(16.0),
-          child: new Form(
-            key: formKey,
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: buildInputs() + buildSubmitButtons(),
+        home: Scaffold(
+            resizeToAvoidBottomPadding: false,
+            backgroundColor: Colors.orange[300],
+            appBar: new AppBar(
+              title: new Text('WINWIN APP'),
             ),
-          ),
-        ));
+            body: new Container(
+              padding: EdgeInsets.all(16.0),
+              child: new Form(
+                key: formKey,
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: buildInputs() + buildSubmitButtons(),
+                ),
+              ),
+            )));
   }
 
   List<Widget> buildInputs() {
@@ -139,13 +147,11 @@ class _LoginPageState extends State<LoginPage> {
                 style: TextStyle(color: Colors.black87))),
         Expanded(child: Divider(color: Colors.green[800])),
       ])),
-
       Createacc_btn(onPressed: () {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => RegisterPage()));
-            formKey.currentState.reset();
+        formKey.currentState.reset();
       }),
-
       Container(
           child: Row(children: <Widget>[
         Expanded(child: Divider(color: Colors.green[800])),
@@ -154,10 +160,13 @@ class _LoginPageState extends State<LoginPage> {
             child: Text("or", style: TextStyle(color: Colors.black87))),
         Expanded(child: Divider(color: Colors.green[800])),
       ])),
+      Phone_btn(onPressed: () {
+        final User user = FirebaseAuth.instance.currentUser;
 
-      Phone_btn(
-        onPressed: guestLogin,
-      ),
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Home()));
+        formKey.currentState.reset();
+      }),
       Facebook_btn(
         onPressed: guestLogin,
       ),
