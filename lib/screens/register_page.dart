@@ -9,8 +9,6 @@ import 'package:regexed_validator/regexed_validator.dart';
 import 'package:winwin/widget_btn/custom_btn.dart';
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({this.auth});
-  final BaseAuth auth;
 
 
   @override
@@ -44,6 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
               .createUserWithEmailAndPassword(
                   email: _email, password: _password);
           User user = result.user;
+          await user.sendEmailVerification();
           print('Registered user: ${user.uid} ');
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
@@ -74,6 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: Colors.orange[300],
         appBar: new AppBar(
           title: new Text('WINWIN APP'),
+          
         ),
         body: new Container(
           padding: EdgeInsets.all(16.0),

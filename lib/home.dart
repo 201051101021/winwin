@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:winwin/screens/login_page.dart';
 import 'auth.dart';
 
 class Home extends StatelessWidget {
@@ -45,6 +46,7 @@ class Home extends StatelessWidget {
                   title: Text("Logout (text,ico)"),
                   onTap: () async {
                     await FirebaseAuth.instance.signOut();
+       
                   },
                 ),
               ],

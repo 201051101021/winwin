@@ -9,6 +9,7 @@ abstract class BaseAuth {
 
 class Auth implements BaseAuth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  @override
 
   Future<String> signInWithEmailAndPassword(
       String email, String password) async {
@@ -23,7 +24,19 @@ class Auth implements BaseAuth {
     UserCredential result = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     User user = result.user;
-    return user.uid;
+
+
+ try {
+        await user.sendEmailVerification();
+        return user.uid;
+     } catch (e) {
+        print("An error occured while trying to send email        verification");
+        print(e.message);
+     }
+
+
+
+    
   }
 
   Future signAnon() async {
