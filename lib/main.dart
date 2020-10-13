@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:winwin/auth.dart';
-import 'package:winwin/home.dart';
+import 'package:winwin/screens/home_page.dart';
 import 'package:winwin/screens/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:winwin/validate_page.dart';
 
 void main() async {
   runApp(MyApp());
@@ -46,13 +46,14 @@ class Land extends StatelessWidget {
                   if (user == null) {
                     return LoginPage();
                   }
-                  if (user != null) {
-                    return Home();
+
+               else {
+                    return HomePage();
                   }
                 }
                 return Scaffold(
                   body: Center(
-                    child: Text("rrrr"),
+                    child: Text("wait"),
                   ),
                 );
               });

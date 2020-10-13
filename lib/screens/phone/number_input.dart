@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:winwin/home.dart';
+import 'package:winwin/screens/home_page.dart';
 
 class MyPhoneVerifyPage extends StatefulWidget {
   MyPhoneVerifyPage(this.user, {Key key}) : super(key: key);
@@ -161,7 +161,7 @@ class _MyPhoneVerifyPageState extends State<MyPhoneVerifyPage> {
   void navigateToHomepage(BuildContext context, User user) {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => HomePage()),
         ModalRoute.withName('/'));
   }
 }

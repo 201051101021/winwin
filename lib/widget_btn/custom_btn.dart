@@ -215,3 +215,68 @@ class Register_btn extends StatelessWidget {
     );
   }
 }
+
+class ResendEmail_btn extends StatelessWidget {
+  ResendEmail_btn({@required this.onPressed});
+  final GestureTapCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      fillColor: Colors.orange,
+      splashColor: Colors.orangeAccent,
+      child: Padding(
+        padding: EdgeInsets.all(5.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const <Widget>[
+            /*Icon(
+              Icons.face,
+              color: Colors.amber,
+            ),*/
+            Text(
+              "Resend Email",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+          ],
+        ),
+      ),
+      onPressed: onPressed,
+      shape: const StadiumBorder(),
+    );
+  }
+}
+
+
+
+class Signout_btn extends StatelessWidget {
+  Signout_btn({@required this.onPressed});
+  final GestureTapCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      fillColor: Colors.orange,
+      splashColor: Colors.orangeAccent,
+      child: Padding(
+        padding: EdgeInsets.all(5.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const <Widget>[
+            /*Icon(
+              Icons.face,
+              color: Colors.amber,
+            ),*/
+            Text(
+              "Signout",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+          ],
+        ),
+      ),
+      onPressed: onPressed,
+      shape: const StadiumBorder(),
+    );
+  }
+}
+

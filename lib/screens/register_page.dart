@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winwin/screens/login_page.dart';
-import 'package:winwin/widget_txt/credit_txt.dart';
-import 'package:winwin/auth.dart';
 
 import 'package:regexed_validator/regexed_validator.dart';
 import 'package:winwin/widget_btn/custom_btn.dart';
+import 'package:winwin/widget_txt/txt.dart';
 
 class RegisterPage extends StatefulWidget {
-
-
   @override
   State<StatefulWidget> createState() => new _RegisterPageState();
 }
@@ -61,30 +58,28 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp( 
-    theme: ThemeData(
+    return MaterialApp(
+        theme: ThemeData(
           primarySwatch: Colors.orange,
-          primaryTextTheme: TextTheme(
-            headline6: TextStyle(color: Colors.white)
-          ),
+          primaryTextTheme:
+              TextTheme(headline6: TextStyle(color: Colors.white)),
         ),
         home: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.orange[300],
-        appBar: new AppBar(
-          title: new Text('WINWIN APP'),
-          
-        ),
-        body: new Container(
-          padding: EdgeInsets.all(16.0),
-          child: new Form(
-            key: formKey,
-            child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: buildInputs() + buildSubmitButtons(),
+            resizeToAvoidBottomPadding: false,
+            backgroundColor: Colors.orange[300],
+            appBar: new AppBar(
+              title: new Text('WINWIN APP'),
             ),
-          ),
-        )));
+            body: new Container(
+              padding: EdgeInsets.all(16.0),
+              child: new Form(
+                key: formKey,
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: buildInputs() + buildSubmitButtons(),
+                ),
+              ),
+            )));
   }
 
   List<Widget> buildInputs() {
