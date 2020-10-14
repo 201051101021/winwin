@@ -23,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
   String _password;
   FormType _formType;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  
+
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -42,10 +44,10 @@ class _LoginPageState extends State<LoginPage> {
       try {
         if (_formType == FormType.login) {
           signOut();
+
           UserCredential result = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: _email, password: _password);
           User user = result.user;
-      
 
           print('Signed in: ${user.uid}');
         }
@@ -65,6 +67,8 @@ class _LoginPageState extends State<LoginPage> {
         UserCredential result = await FirebaseAuth.instance.signInAnonymously();
         User user = result.user;
         print('Signed in: ${user.uid}');
+      
+  
       }
     } catch (e) {
       print('Error $e');
