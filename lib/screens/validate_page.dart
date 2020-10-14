@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,21 +12,25 @@ import 'package:winwin/widget_txt/txt.dart';
 class ValidatePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _ValidatePageState();
+  
 }
 
 class _ValidatePageState extends State<ValidatePage> {
 
-
-  Future<Null> refresher() {
+    Future<Null> refresher() {
     User user = FirebaseAuth.instance.currentUser;
 
-    setState(() {
-      if (user.emailVerified == true) {
-        return HomePage();
-      }
-    });
-    return null;
-  }
+  
+      if (user.emailVerified == true) 
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        }
+      
+  
+
+  
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +48,18 @@ class _ValidatePageState extends State<ValidatePage> {
             ),
             body: new RefreshIndicator(
                 onRefresh: refresher,
-                child: new Container(
+                child:ListView(
+               
                   padding: EdgeInsets.all(16.0),
-                  child: new Form(
-                    child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                
                       children: buildtext() + buildSubmitButtons(),
                     ),
                   ),
-                ))));
+                )
+
+                
+           
+                );
   }
 }
 
@@ -62,6 +71,7 @@ class _ValidatePageState extends State<ValidatePage> {
   void signout() async {
     await FirebaseAuth.instance.signOut();
   }
+
 
   List<Widget> buildtext() {
     return [
@@ -80,3 +90,5 @@ class _ValidatePageState extends State<ValidatePage> {
       Credit_txt(),
     ];
   }
+
+  

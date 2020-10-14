@@ -35,3 +35,34 @@ class Validate_txt extends StatelessWidget {
         ]));
   }
 }
+
+class Anyacc_txt extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+          child: Row(children: <Widget>[
+        Expanded(child: Divider(color: Colors.green[800])),
+        Padding(
+            padding: EdgeInsets.all(6),
+            child: Text("Don’t have an account?",
+                style: TextStyle(color: Colors.black87))),
+        Expanded(child: Divider(color: Colors.green[800])),
+      ]));
+  }
+}
+
+class Or_txt extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+          child: Row(children: <Widget>[
+        Expanded(child: Divider(color: Colors.green[800])),
+        Padding(
+            padding: EdgeInsets.all(6),
+            child: Text("or", style: TextStyle(color: Colors.black87))),
+        Expanded(child: Divider(color: Colors.green[800])),
+      ]));
+  }
+}
+
+

@@ -280,3 +280,70 @@ class Signout_btn extends StatelessWidget {
   }
 }
 
+
+class Forgot_btn extends StatelessWidget {
+  Forgot_btn({@required this.onPressed});
+  final GestureTapCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+    
+      child: Padding(
+        padding: EdgeInsets.all(5.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const <Widget>[
+            /*Icon(
+              Icons.face,
+              color: Colors.amber,
+            ),*/
+            Text(
+              "Forgot password",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+          ],
+        ),
+      ),
+      onPressed: onPressed,
+      shape: const StadiumBorder(),
+    );
+  }
+}
+
+class Submit_btn extends StatelessWidget {
+  Submit_btn({@required this.onPressed});
+  final GestureTapCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      fillColor: Colors.orange,
+      splashColor: Colors.orangeAccent,
+      child: Padding(
+        padding: EdgeInsets.all(5.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const <Widget>[
+            /*Icon(
+              Icons.face,
+              color: Colors.amber,
+            ),*/
+            Text(
+              "Send",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+          ],
+        ),
+      ),
+      onPressed: onPressed,
+      shape: const StadiumBorder(),
+    );
+  }
+}
+
+
+
+
+
+

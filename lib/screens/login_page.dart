@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:winwin/screens/forgot_page.dart';
 import 'package:winwin/screens/home_page.dart';
 import 'package:winwin/screens/register_page.dart';
 import 'package:regexed_validator/regexed_validator.dart';
+import 'package:winwin/screens/validate_page.dart';
 import 'package:winwin/widget_btn/custom_btn.dart';
+import 'package:winwin/widget_txt/txt.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _LoginPageState();
 }
 
-enum FormType { login, register, guest, facebook, phone, google }
+enum FormType { login, register, guest, facebook, phone, google, forgot }
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
@@ -42,6 +45,8 @@ class _LoginPageState extends State<LoginPage> {
           UserCredential result = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: _email, password: _password);
           User user = result.user;
+      
+
           print('Signed in: ${user.uid}');
         }
       } catch (e) {
@@ -83,6 +88,21 @@ class _LoginPageState extends State<LoginPage> {
 
   void signOut() async {
     return await _auth.signOut();
+  }
+
+  void forgot() async {
+    setState(() {
+      _formType = FormType.forgot;
+    });
+    try {
+      if (_formType == FormType.forgot) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ForgotPage()));
+      }
+      formKey.currentState.reset();
+    } catch (e) {
+      print('Error $e');
+    }
   }
 
   @override
@@ -145,27 +165,16 @@ class _LoginPageState extends State<LoginPage> {
       Login_btn(
         onPressed: emailLogin,
       ),
-      Container(
-          child: Row(children: <Widget>[
-        Expanded(child: Divider(color: Colors.green[800])),
-        Padding(
-            padding: EdgeInsets.all(6),
-            child: Text("Don’t have an account?",
-                style: TextStyle(color: Colors.black87))),
-        Expanded(child: Divider(color: Colors.green[800])),
-      ])),
+      Or_txt(),
+      Guest_btn(
+        onPressed: guestLogin,
+      ),
+      Anyacc_txt(),
       Createacc_btn(
         onPressed: register,
       ),
-      Container(
-          child: Row(children: <Widget>[
-        Expanded(child: Divider(color: Colors.green[800])),
-        Padding(
-            padding: EdgeInsets.all(6),
-            child: Text("or", style: TextStyle(color: Colors.black87))),
-        Expanded(child: Divider(color: Colors.green[800])),
-      ])),
-      Phone_btn(onPressed: () {
+
+      /*Phone_btn(onPressed: () {
         // final User user = FirebaseAuth.instance.currentUser;
 
         Navigator.push(
@@ -177,9 +186,10 @@ class _LoginPageState extends State<LoginPage> {
       ),
       Google_btn(
         onPressed: guestLogin,
-      ),
-      Guest_btn(
-        onPressed: guestLogin,
+      ),*/
+
+      Forgot_btn(
+        onPressed: forgot,
       ),
     ];
   }

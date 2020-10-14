@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:winwin/screens/home_page.dart';
 import 'package:winwin/screens/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:winwin/validate_page.dart';
+import 'package:winwin/screens/validate_page.dart';
 
 void main() async {
   runApp(MyApp());
@@ -47,8 +47,11 @@ class Land extends StatelessWidget {
                     return LoginPage();
                   }
 
-               else {
+                  if (user != null && user.emailVerified == true ) {
                     return HomePage();
+                  }
+                  if (user.emailVerified != true) {
+                    return ValidatePage();
                   }
                 }
                 return Scaffold(
