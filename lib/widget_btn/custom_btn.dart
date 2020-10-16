@@ -173,7 +173,7 @@ class Guest_btn extends StatelessWidget {
               color: Colors.amber,
             ),*/
             Text(
-              "Login with Guest",
+              "Guest",
               style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],
