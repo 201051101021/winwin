@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winwin/screens/forgot_page.dart';
 import 'package:winwin/screens/home_page.dart';
+import 'package:winwin/screens/phone_page.dart';
 import 'package:winwin/screens/register_page.dart';
 import 'package:regexed_validator/regexed_validator.dart';
 import 'package:winwin/screens/validate_page.dart';
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
         if (_formType == FormType.login) {
           signOut();
 
-          UserCredential result = await FirebaseAuth.instance
+          UserCredential result = await _auth
               .signInWithEmailAndPassword(email: _email, password: _password);
           User user = result.user;
 
@@ -64,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       if (_formType == FormType.guest) {
         signOut();
-        UserCredential result = await FirebaseAuth.instance.signInAnonymously();
+        UserCredential result = await _auth.signInAnonymously();
         User user = result.user;
         print('Signed in: ${user.uid}');
       
@@ -178,20 +179,20 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: register,
       ),
 
-      /*Phone_btn(onPressed: () {
+      Phone_btn(onPressed: () {
         // final User user = FirebaseAuth.instance.currentUser;
 
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+            context, MaterialPageRoute(builder: (context) => PhonePage()));
         formKey.currentState.reset();
       }),
-      Facebook_btn(
+     /* Facebook_btn(
         onPressed: guestLogin,
       ),
       Google_btn(
         onPressed: guestLogin,
-      ),*/
-
+      ),
+*/
       Forgot_btn(
         onPressed: forgot,
       ),

@@ -4,27 +4,44 @@ import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winwin/screens/login_page.dart';
 
-import 'package:regexed_validator/regexed_validator.dart';
 import 'package:winwin/widget_btn/custom_btn.dart';
 import 'package:winwin/widget_txt/txt.dart';
 
-class RegisterPage extends StatefulWidget {
+class PhonePage extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _RegisterPageState();
+  State<StatefulWidget> createState() => new _PhonePageState();
 }
 
-enum FormType { create }
+enum FormType { phone }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _PhonePageState extends State<PhonePage> {
   final formKey = new GlobalKey<FormState>();
   
 
   bool checkedValue = false;
 
-  String _email;
+  String _number;
   String _password;
-  FormType _formType = FormType.create;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  FormType _formType = FormType.phone;
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+
+  bool isValidPhoneNumber(String phoneNumber) {
+  // You may need to change this pattern to fit your requirement.
+  // I just copied the pattern from here: https://regexr.com/3c53v
+  final pattern = r'(^(?:[+0]9)?[0-9]{11}$)';
+  final regExp = RegExp(pattern);
+
+  if (phoneNumber == null || phoneNumber.isEmpty ) {
+    return false;
+  }
+
+  if (!regExp.hasMatch(phoneNumber)) {
+    return false;
+  }
+  return true;
+}
+
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -39,12 +56,23 @@ class _RegisterPageState extends State<RegisterPage> {
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
-        if (_formType == FormType.create && checkedValue == true) {
-          UserCredential result = await _auth
+        if (_formType == FormType.phone && checkedValue == true) {
+          UserCredential result = await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
-                  email: _email, password: _password);
+                  email: _number, password: _password);
           User user = result.user;
-          await user.sendEmailVerification();
+
+          await _auth.verifyPhoneNumber(
+    phoneNumber: _number,
+    timeout: Duration(seconds: 60),
+    verificationCompleted: null,
+    verificationFailed: null,
+    codeSent: null,
+    codeAutoRetrievalTimeout: null
+  );
+
+
+
           print('Registered user: ${user.uid} ');
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => LoginPage()));
@@ -57,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   void moveToCreate() {
     setState(() {
-      _formType = FormType.create;
+      _formType = FormType.phone;
     });
   }
 
@@ -95,12 +123,12 @@ class _RegisterPageState extends State<RegisterPage> {
           fontSize: 25.0,
         ),
         decoration: new InputDecoration(
-            hintText: "Enter your email",
+            hintText: "Enter your Phone number",
             labelStyle: new TextStyle(color: Colors.white),
             hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey[200])),
-        validator: (value) =>
-            !validator.email(value) ? 'Please provide a valid Email' : null,
-        onSaved: (value) => _email = value,
+        validator:  (value) =>
+            value.length > 11 || !isValidPhoneNumber(value) ? 'Please provide a valid Phone number' : null,
+        onSaved: (value) => _number = value,
       ),
       new TextFormField(
         style: TextStyle(color: Colors.white, fontSize: 25.0),
