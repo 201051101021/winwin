@@ -196,10 +196,11 @@ class _PhonePageState extends State<PhonePage> {
       Signout_btn(onPressed: () {
         signout();
       }),
-      Signout_btn(onPressed: () {
+      Userchck_btn(onPressed: () {
         User user = _auth.currentUser;
         print(user);
       }),
+      Number_txt(),
     ];
   }
 }

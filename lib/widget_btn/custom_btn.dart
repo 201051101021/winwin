@@ -343,6 +343,38 @@ class Submit_btn extends StatelessWidget {
 }
 
 
+class Userchck_btn extends StatelessWidget {
+  Userchck_btn({@required this.onPressed});
+  final GestureTapCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      fillColor: Colors.orange,
+      splashColor: Colors.orangeAccent,
+      child: Padding(
+        padding: EdgeInsets.all(5.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: const <Widget>[
+            /*Icon(
+              Icons.face,
+              color: Colors.amber,
+            ),*/
+            Text(
+              "User Check",
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+          ],
+        ),
+      ),
+      onPressed: onPressed,
+      shape: const StadiumBorder(),
+    );
+  }
+}
+
+
 
 
 

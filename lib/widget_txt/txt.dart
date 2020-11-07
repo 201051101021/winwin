@@ -66,3 +66,19 @@ class Or_txt extends StatelessWidget {
 }
 
 
+class Number_txt extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+          child: Row(children: <Widget>[
+        Expanded(child: Divider(color: Colors.green[800])),
+        Padding(
+            padding: EdgeInsets.all(6),
+            child: Text("Number 095 519 0399 Code 123456", style: TextStyle(color: Colors.black87))),
+        Expanded(child: Divider(color: Colors.green[800])),
+      ]));
+  }
+}
+
+
+
