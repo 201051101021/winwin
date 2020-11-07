@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+
 class HomePage extends StatelessWidget {
+  final User user;
+  HomePage({this.user});
 
 
 
@@ -21,12 +24,17 @@ class HomePage extends StatelessWidget {
           drawer: Drawer(
             child: ListView(
               children: <Widget>[
-                DrawerHeader(child: Text('User (Pic)')),
+                DrawerHeader(child: Text('${user.uid} (Pic)')),
                 ListTile(
                   title: Text("Profile (btn)"),
                 ),
                 ListTile(
                   title: Text("setting (btn)"),
+                  onTap: () {
+                   
+        
+                    
+                  },
                 ),
                 ListTile(
                   title: Text("logs (btn)"),

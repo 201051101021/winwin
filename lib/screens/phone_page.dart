@@ -1,8 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:winwin/screens/login_page.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:winwin/screens/as.dart';
+import 'package:winwin/screens/home_page.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import 'package:winwin/widget_btn/custom_btn.dart';
 import 'package:winwin/widget_txt/txt.dart';
@@ -16,32 +18,15 @@ enum FormType { phone }
 
 class _PhonePageState extends State<PhonePage> {
   final formKey = new GlobalKey<FormState>();
-  
-
+  String otp, verificationId;
   bool checkedValue = false;
-
+  String initialCountry = 'TH';
+  PhoneNumber number = PhoneNumber(isoCode: 'TH');
   String _number;
-  String _password;
+  final _phoneController = TextEditingController();
+
   FormType _formType = FormType.phone;
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-
-
-  bool isValidPhoneNumber(String phoneNumber) {
-  // You may need to change this pattern to fit your requirement.
-  // I just copied the pattern from here: https://regexr.com/3c53v
-  final pattern = r'(^(?:[+0]9)?[0-9]{11}$)';
-  final regExp = RegExp(pattern);
-
-  if (phoneNumber == null || phoneNumber.isEmpty ) {
-    return false;
-  }
-
-  if (!regExp.hasMatch(phoneNumber)) {
-    return false;
-  }
-  return true;
-}
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -53,29 +38,86 @@ class _PhonePageState extends State<PhonePage> {
     }
   }
 
+  Future phoneLogin(String _number, BuildContext context) async {
+    _auth.verifyPhoneNumber(
+      phoneNumber: _number,
+      timeout: Duration(seconds: 15),
+      verificationCompleted: (AuthCredential credential) async {
+        print("SS");
+
+        //This callback would gets called when verification is done auto maticlly
+      },
+      verificationFailed: (FirebaseAuthException exception) {
+        if (exception.code == 'invalid-phone-number') {
+          print('The provided phone number is not valid.');
+        } else {
+          print(exception);
+        }
+      },
+      codeSent: (String verId, [int forceResendingToken]) {
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(
+                  'Enter pin number',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    PinCodeTextField(
+                      appContext: context,
+                      length: 6,
+                      onChanged: (value) {
+                        print(value);
+                        otp = value;
+                      },
+                      pinTheme: PinTheme(
+                        shape: PinCodeFieldShape.box,
+                        borderRadius: BorderRadius.circular(5),
+                        fieldHeight: 45,
+                        fieldWidth: 30,
+                        inactiveColor: Colors.purple,
+                        activeColor: Colors.orange,
+                        selectedColor: Colors.brown,
+                      ),
+                      keyboardType: TextInputType.number,
+                      onCompleted: (value) async {
+                        User user = _auth.currentUser;
+                        
+
+                        // Sign the user in (or link) with the credential
+                        if (user == null) {
+                          PhoneAuthCredential authCredential =
+                              PhoneAuthProvider.credential(
+                                  verificationId: verId, smsCode: otp);
+                      
+                          await _auth.signInWithCredential(authCredential);
+                        } else if (user != null && user.isAnonymous == true) {
+                          signout();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              );
+            });
+      },
+      codeAutoRetrievalTimeout: (String verId) {
+        verificationId = verId;
+        print(verId);
+        print("Timeout");
+      },
+    );
+  }
+
   void validateAndSubmit() async {
     if (validateAndSave()) {
       try {
         if (_formType == FormType.phone && checkedValue == true) {
-          UserCredential result = await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(
-                  email: _number, password: _password);
-          User user = result.user;
-
-          await _auth.verifyPhoneNumber(
-    phoneNumber: _number,
-    timeout: Duration(seconds: 60),
-    verificationCompleted: null,
-    verificationFailed: null,
-    codeSent: null,
-    codeAutoRetrievalTimeout: null
-  );
-
-
-
-          print('Registered user: ${user.uid} ');
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
+          phoneLogin(_number, context);
         }
       } catch (e) {
         print('Error $e');
@@ -83,11 +125,7 @@ class _PhonePageState extends State<PhonePage> {
     }
   }
 
-  void moveToCreate() {
-    setState(() {
-      _formType = FormType.phone;
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +147,7 @@ class _PhonePageState extends State<PhonePage> {
                 key: formKey,
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: buildInputs() + check() + buildSubmitButtons(),
+                  children: buildInputs() + buildSubmitButtons(),
                 ),
               ),
             )));
@@ -117,104 +155,55 @@ class _PhonePageState extends State<PhonePage> {
 
   List<Widget> buildInputs() {
     return [
-      new TextFormField(
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 25.0,
+      InternationalPhoneNumberInput(
+        onInputChanged: (PhoneNumber number) {
+          print(number.phoneNumber);
+        },
+        onInputValidated: (bool value) {
+          print(value);
+        },
+        selectorConfig: SelectorConfig(
+          selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+          backgroundColor: Colors.orange,
         ),
-        decoration: new InputDecoration(
-            hintText: "Enter your Phone number",
-            labelStyle: new TextStyle(color: Colors.white),
-            hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey[200])),
-        validator:  (value) =>
-            value.length > 11 || !isValidPhoneNumber(value) ? 'Please provide a valid Phone number' : null,
-        onSaved: (value) => _number = value,
-      ),
-      new TextFormField(
-        style: TextStyle(color: Colors.white, fontSize: 25.0),
-        decoration: new InputDecoration(
-            hintText: "Enter your password",
-            labelStyle: new TextStyle(color: Colors.white),
-            hintStyle: TextStyle(fontSize: 20.0, color: Colors.grey[200])),
-        obscureText: true,
-        validator: (value) =>
-            value.length < 8 ? 'Use 8 characters or more' : null,
-        onSaved: (value) => _password = value,
+        ignoreBlank: false,
+        hintText: 'xx-xxx-xxxx',
+        autoValidateMode: AutovalidateMode.disabled,
+        selectorTextStyle: TextStyle(color: Colors.black),
+        initialValue: number,
+        textFieldController: _phoneController,
+        inputBorder: OutlineInputBorder(),
       ),
     ];
   }
 
   List<Widget> buildSubmitButtons() {
     return [
-      Register_btn(
-        onPressed: validateAndSubmit,
+      Submit_btn(
+        onPressed: () {
+          try {
+            if (formKey.currentState.validate() == true) {
+              String mobile = "+66" + _phoneController.text.trim();
+              phoneLogin(mobile, context);
+              print(mobile);
+            }
+          } catch (e) {
+            print('Error $e');
+          }
+        },
       ),
       Credit_txt(),
-    ];
-  }
-
-  List<Widget> check() {
-    return [
-      LinkedLabelCheckbox(
-  
-        label: 'Privacy & Policy',
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        
-        value: checkedValue,
-        onChanged: (bool newValue) {
-          setState(() {
-            checkedValue = newValue;
-          });
-        },
-        
-      )
+      Signout_btn(onPressed: () {
+        signout();
+      }),
+      Signout_btn(onPressed: () {
+        User user = _auth.currentUser;
+        print(user);
+      }),
     ];
   }
 }
 
-class LinkedLabelCheckbox extends StatelessWidget {
-  const LinkedLabelCheckbox({
-    this.label,
-    this.padding,
-    this.value,
-    this.onChanged,
-  });
-
-  final String label;
-  final EdgeInsets padding;
-  final bool value;
-  final Function onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsetsDirectional.only(),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                text: label,
-                style: TextStyle(
-                  color: Colors.redAccent,
-                  decoration: TextDecoration.underline,
-                  fontSize: 20
-                ),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    print('Label has been tapped.');
-                  },
-              ),
-            ),
-          ),
-          Checkbox(
-            value: value,
-            onChanged: (bool newValue) {
-              onChanged(newValue);
-            },
-          ),
-        ],
-      ),
-    );
-  }
+void signout() async {
+  await FirebaseAuth.instance.signOut();
 }

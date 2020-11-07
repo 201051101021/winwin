@@ -68,7 +68,7 @@ class Phone_btn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      fillColor: Colors.green,
+      fillColor: Colors.green[300],
       splashColor: Colors.greenAccent,
       child: Padding(
         padding: EdgeInsets.all(5.0),
@@ -330,7 +330,7 @@ class Submit_btn extends StatelessWidget {
               color: Colors.amber,
             ),*/
             Text(
-              "Send",
+              "Submit",
               style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ],

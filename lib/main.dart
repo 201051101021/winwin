@@ -21,10 +21,7 @@ class MyApp extends StatelessWidget {
 class Land extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
-  bool guest() {
-    FirebaseAuth.instance.signInAnonymously();
-    return true;
-  }
+  User user;
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +49,19 @@ class Land extends StatelessWidget {
                     return LoginPage();
                   }
 
-                  if (user != null && user.emailVerified == true || guest() == true) {
-                    return HomePage();
+                  if (user != null && user.emailVerified == true ||
+                      user.isAnonymous == true || user.phoneNumber != null
+                     ) {
+                    return HomePage(user: user);
                   }
-                  if (user.emailVerified != true ) {
+                  if (user.emailVerified != true || user.isAnonymous != true  ) {
                     return ValidatePage();
                   }
                 }
 
                 return Scaffold(
                   body: Center(
-                    child: Text("wait"),
+                    child: Text("Splash"),
                   ),
                 );
               });

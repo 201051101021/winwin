@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:winwin/screens/forgot_page.dart';
-import 'package:winwin/screens/home_page.dart';
+
 import 'package:winwin/screens/phone_page.dart';
 import 'package:winwin/screens/register_page.dart';
 import 'package:regexed_validator/regexed_validator.dart';
-import 'package:winwin/screens/validate_page.dart';
+
 import 'package:winwin/widget_btn/custom_btn.dart';
 import 'package:winwin/widget_txt/txt.dart';
 
@@ -174,11 +174,6 @@ class _LoginPageState extends State<LoginPage> {
       Guest_btn(
         onPressed: guestLogin,
       ),
-      Anyacc_txt(),
-      Createacc_btn(
-        onPressed: register,
-      ),
-
       Phone_btn(onPressed: () {
         // final User user = FirebaseAuth.instance.currentUser;
 
@@ -186,6 +181,12 @@ class _LoginPageState extends State<LoginPage> {
             context, MaterialPageRoute(builder: (context) => PhonePage()));
         formKey.currentState.reset();
       }),
+      Anyacc_txt(),
+      Createacc_btn(
+        onPressed: register,
+      ),
+
+      
      /* Facebook_btn(
         onPressed: guestLogin,
       ),
