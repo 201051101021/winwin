@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:winwin/screens/profile_page.dart';
+import 'package:winwin/screens/test.dart';
 
 class HomePage extends StatelessWidget {
   final User user;
   HomePage({this.user});
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +24,19 @@ class HomePage extends StatelessWidget {
               children: <Widget>[
                 DrawerHeader(child: Text('${user.uid} (Pic)')),
                 ListTile(
+                  
                   title: Text("Profile (btn)"),
+                  
+                  onTap: () {
+                    Navigator.push(
+              context, MaterialPageRoute(builder: (context) => ProfilePage()));
+        }
                 ),
                 ListTile(
                   title: Text("setting (btn)"),
                   onTap: () {
-                   
-        
+                    Navigator.push(
+              context, MaterialPageRoute(builder: (context) => FirebaseDemoScreen()));
                     
                   },
                 ),
@@ -49,7 +53,6 @@ class HomePage extends StatelessWidget {
                   title: Text("Logout (text,ico)"),
                   onTap: () async {
                     await FirebaseAuth.instance.signOut();
-       
                   },
                 ),
               ],

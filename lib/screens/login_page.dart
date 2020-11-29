@@ -24,8 +24,6 @@ class _LoginPageState extends State<LoginPage> {
   String _password;
   FormType _formType;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  
-
 
   bool validateAndSave() {
     final form = formKey.currentState;
@@ -46,8 +44,8 @@ class _LoginPageState extends State<LoginPage> {
         if (_formType == FormType.login) {
           signOut();
 
-          UserCredential result = await _auth
-              .signInWithEmailAndPassword(email: _email, password: _password);
+          UserCredential result = await _auth.signInWithEmailAndPassword(
+              email: _email, password: _password);
           User user = result.user;
 
           print('Signed in: ${user.uid}');
@@ -68,8 +66,6 @@ class _LoginPageState extends State<LoginPage> {
         UserCredential result = await _auth.signInAnonymously();
         User user = result.user;
         print('Signed in: ${user.uid}');
-      
-  
       }
     } catch (e) {
       print('Error $e');
@@ -133,7 +129,9 @@ class _LoginPageState extends State<LoginPage> {
                   children: buildInputs() + buildSubmitButtons(),
                 ),
               ),
-            )));
+            )
+            )
+            );
   }
 
   List<Widget> buildInputs() {
@@ -186,8 +184,7 @@ class _LoginPageState extends State<LoginPage> {
         onPressed: register,
       ),
 
-      
-     /* Facebook_btn(
+      /* Facebook_btn(
         onPressed: guestLogin,
       ),
       Google_btn(
